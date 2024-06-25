@@ -1,7 +1,7 @@
 package jogoDeTabuleiro;
 
 /**
- * Classe riada para indicar uma posição no tabuleiro
+ * Classe criada para indicar uma posição no tabuleiro
  * @author Henrique Fidelis
  * @since Classe criada em 25/06/2024
  */

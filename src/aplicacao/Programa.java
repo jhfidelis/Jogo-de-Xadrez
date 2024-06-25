@@ -1,9 +1,10 @@
 package aplicacao;
 
 import jogoDeTabuleiro.Posicao;
+import jogoDeTabuleiro.Tabuleiro;
 
 /**
- * Classe principla do projeto
+ * Classe principal do projeto
  * @author Henrique Fidelis
  * @since Classe criada em 25/06/2024
  */
@@ -12,8 +13,7 @@ public class Programa {
 
 	public static void main(String[] args) {
 		
-		Posicao pos = new Posicao(3, 5);
-		System.out.println(pos);
+		Tabuleiro tabuleiro = new Tabuleiro(8, 8);
 
 	}// fim do main
 
