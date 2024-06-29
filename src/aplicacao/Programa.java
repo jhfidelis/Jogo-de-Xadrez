@@ -1,7 +1,6 @@
 package aplicacao;
 
-import jogoDeTabuleiro.Posicao;
-import jogoDeTabuleiro.Tabuleiro;
+import xadrez.PartidaDeXadrez;
 
 /**
  * Classe principal do projeto
@@ -13,7 +12,8 @@ public class Programa {
 
 	public static void main(String[] args) {
 		
-		Tabuleiro tabuleiro = new Tabuleiro(8, 8);
+		PartidaDeXadrez partida = new PartidaDeXadrez();
+		UI.imprimirTabuleiro(partida.getPecas());
 
 	}// fim do main
 

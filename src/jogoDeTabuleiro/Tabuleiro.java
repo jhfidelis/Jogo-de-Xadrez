@@ -34,4 +34,14 @@ public class Tabuleiro {
 		this.colunas = colunas;
 	}
 
+	// Método para retornar uma peça usando como parâmetro uma linha e uma coluna
+	public Peca retornarPeca(int linha,  int coluna) {
+		return pecas[linha][coluna];
+	}
+	
+	// Sobrecarga do método retornarPeca passando uma Posição como parâmetro
+	public Peca retornarPeca(Posicao posicao) {
+		return pecas[posicao.getLinha()][posicao.getColuna()];
+	}
+
 }// fim da classe
