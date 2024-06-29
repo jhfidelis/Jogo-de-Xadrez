@@ -1,6 +1,9 @@
 package xadrez;
 
+import jogoDeTabuleiro.Posicao;
 import jogoDeTabuleiro.Tabuleiro;
+import xadrez.pecas.Rei;
+import xadrez.pecas.Torre;
 
 /**
  * 
@@ -14,6 +17,7 @@ public class PartidaDeXadrez {
 	
 	public PartidaDeXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);
+		iniciarPartida();
 	}
 	
 	// Método para retornar uma matriz de peças de xadrez correspondentes a partida
@@ -26,4 +30,12 @@ public class PartidaDeXadrez {
 		}
 		return mat;
 	}
+
+	// Método para iniciar a partida de xadrez
+	public void iniciarPartida() {
+		tabuleiro.inserirPeca(new Torre(tabuleiro, Cor.BRANCO), new Posicao(2, 1));
+		tabuleiro.inserirPeca(new Rei(tabuleiro, Cor.PRETO), new Posicao(0, 4));
+		tabuleiro.inserirPeca(new Rei(tabuleiro, Cor.BRANCO), new Posicao(7, 4));
+	}
+
 }// fim da classe
