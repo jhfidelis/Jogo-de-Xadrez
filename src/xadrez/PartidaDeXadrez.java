@@ -1,6 +1,5 @@
 package xadrez;
 
-import jogoDeTabuleiro.Posicao;
 import jogoDeTabuleiro.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -31,11 +30,16 @@ public class PartidaDeXadrez {
 		return mat;
 	}
 
+	// Método para inserir uma peça em um lugar determinado
+	private void inserirNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
+		tabuleiro.inserirPeca(peca, new PosicaoDoXadrez(coluna, linha).converterParaPosicao());
+	}
+	
 	// Método para iniciar a partida de xadrez
 	public void iniciarPartida() {
-		tabuleiro.inserirPeca(new Torre(tabuleiro, Cor.BRANCO), new Posicao(2, 1));
-		tabuleiro.inserirPeca(new Rei(tabuleiro, Cor.PRETO), new Posicao(0, 4));
-		tabuleiro.inserirPeca(new Rei(tabuleiro, Cor.BRANCO), new Posicao(7, 4));
+		inserirNovaPeca('b', 6, new Torre(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
+		inserirNovaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
 	}
 
 }// fim da classe
