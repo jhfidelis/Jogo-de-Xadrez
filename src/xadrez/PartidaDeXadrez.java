@@ -37,9 +37,19 @@ public class PartidaDeXadrez {
 	
 	// Método para iniciar a partida de xadrez
 	public void iniciarPartida() {
-		inserirNovaPeca('b', 6, new Torre(tabuleiro, Cor.BRANCO));
-		inserirNovaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
-		inserirNovaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('c', 1, new Torre(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('c', 2, new Torre(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('d', 2, new Torre(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('e', 2, new Torre(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('e', 1, new Torre(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('d', 1, new Rei(tabuleiro, Cor.BRANCO));
+
+		inserirNovaPeca('c', 7, new Torre(tabuleiro, Cor.PRETO));
+		inserirNovaPeca('c', 8, new Torre(tabuleiro, Cor.PRETO));
+		inserirNovaPeca('d', 7, new Torre(tabuleiro, Cor.PRETO));
+		inserirNovaPeca('e', 7, new Torre(tabuleiro, Cor.PRETO));
+		inserirNovaPeca('e', 8, new Torre(tabuleiro, Cor.PRETO));
+		inserirNovaPeca('d', 8, new Rei(tabuleiro, Cor.PRETO));
 	}
 
 }// fim da classe
