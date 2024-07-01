@@ -8,14 +8,17 @@ package jogoDeTabuleiro;
 
 public class Peca {
 
+	// Atributos da classe Peca
 	protected Posicao posicao;
 	private Tabuleiro tabuleiro;
 
+	// Método construtor da classe
 	public Peca(Tabuleiro tabuleiro) {
 		this.tabuleiro = tabuleiro;
 		posicao = null;
 	}
 
+	// Método get da classe
 	protected Tabuleiro getTabuleiro() {
 		return tabuleiro;
 	}

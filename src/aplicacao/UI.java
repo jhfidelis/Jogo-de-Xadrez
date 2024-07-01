@@ -4,7 +4,7 @@ import xadrez.Cor;
 import xadrez.PecaDeXadrez;
 
 /**
- * 
+ * Classe criada para definir a interface do jogo de zadrez
  * @author Henrique Fidelis
  * @since Classe criada em 28/06/2024
  */
@@ -32,6 +32,7 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+	// Função para imprimir um tabuleiro de xadrez
 	public static void imprimirTabuleiro(PecaDeXadrez[][] pecas) {
 		for (int i = 0; i < pecas.length; i++) {
 			System.out.print((8 - i) + " ");
@@ -43,6 +44,7 @@ public class UI {
 		System.out.println("  A B C D E F G H");
 	}
 
+	// Função para imprimir uma peça do xadrez
 	private static void imprimirPeca(PecaDeXadrez peca) {
 		if (peca == null) {
 			System.out.print("-");

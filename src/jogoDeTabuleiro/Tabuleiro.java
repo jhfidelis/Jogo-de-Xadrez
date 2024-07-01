@@ -8,10 +8,12 @@ package jogoDeTabuleiro;
 
 public class Tabuleiro {
 
+	// Atributos da classe Tabuleiro
 	private int linhas;
 	private int colunas;
 	private Peca[][] pecas;
 
+	// Método construtor da classe
 	public Tabuleiro(int linhas, int colunas) {
 		if(linhas < 1 || colunas < 1) {
 			throw new TabuleiroException("ERRO NA CRIAÇÃO DO TABULEIRO: E necessário que haja pelo menos 1 linha e 1 coluna!");
@@ -21,6 +23,7 @@ public class Tabuleiro {
 		pecas = new Peca[linhas][colunas];
 	}
 
+	// Métodos getters
 	public int getLinhas() {
 		return linhas;
 	}

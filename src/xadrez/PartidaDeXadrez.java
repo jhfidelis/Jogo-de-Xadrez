@@ -5,20 +5,22 @@ import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
 
 /**
- * 
+ * Classe criada para criar uma partida e adicionar as peças iniciais do jogo
  * @author Henrique Fidelis
  * @since Classe criada em 28/06/2024
  */
 
 public class PartidaDeXadrez {
 
+	// Declaração de atributos da classe PartidaDeXadrez
 	private Tabuleiro tabuleiro;
-	
+
+	// Método construtor da classe
 	public PartidaDeXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);
 		iniciarPartida();
 	}
-	
+
 	// Método para retornar uma matriz de peças de xadrez correspondentes a partida
 	public PecaDeXadrez[][] getPecas() {
 		PecaDeXadrez[][] mat = new PecaDeXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
@@ -34,7 +36,7 @@ public class PartidaDeXadrez {
 	private void inserirNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
 		tabuleiro.inserirPeca(peca, new PosicaoDoXadrez(coluna, linha).converterParaPosicao());
 	}
-	
+
 	// Método para iniciar a partida de xadrez
 	public void iniciarPartida() {
 		inserirNovaPeca('c', 1, new Torre(tabuleiro, Cor.BRANCO));
