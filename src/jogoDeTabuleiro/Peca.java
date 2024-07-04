@@ -24,16 +24,16 @@ public abstract class Peca {
 	}
 
 	// Método abstrato para definir os movimentos possíveis de uma peça
-	public abstract boolean[][] definirMoventosPossiveis();
+	public abstract boolean[][] definirMovimentosPossiveis();
 
 	// Método para checar se é possíveil realizar o movimento de uma peça
-	public boolean definirMoventoPossivel(Posicao posicao) {
-		return definirMoventosPossiveis()[posicao.getLinha()][posicao.getColuna()];
+	public boolean definirMovimentoPossivel(Posicao posicao) {
+		return definirMovimentosPossiveis()[posicao.getLinha()][posicao.getColuna()];
 	}
 
 	// Método para definir se existe pelo menos 1 movimento para a peça
 	public boolean checarQualquerMovPossivel() {
-		boolean[][] mat = definirMoventosPossiveis();
+		boolean[][] mat = definirMovimentosPossiveis();
 		for (int i = 0; i < mat.length; i++) {
 			for (int j = 0; j < mat.length; j++) {
 				if (mat[i][j]) {

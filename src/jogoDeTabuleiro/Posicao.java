@@ -35,6 +35,12 @@ public class Posicao {
 		this.coluna = coluna;
 	}
 
+	// Método para inserir valores de uma posição
+	public void inserirValores(int linha, int coluna) {
+		this.linha = linha;
+		this.coluna = coluna;
+	}
+
 	// Método toString para imprimir a linha e coluna
 	@Override
 	public String toString() {
