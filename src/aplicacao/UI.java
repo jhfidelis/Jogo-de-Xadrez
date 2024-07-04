@@ -1,7 +1,11 @@
 package aplicacao;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 import xadrez.Cor;
 import xadrez.PecaDeXadrez;
+import xadrez.PosicaoDoXadrez;
 
 /**
  * Classe criada para definir a interface do jogo de zadrez
@@ -31,6 +35,19 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+	// Método para ler uma posição do usuário
+	public static PosicaoDoXadrez lerPosicaoDoXadrez(Scanner sc) {
+		try {
+			String str = sc.nextLine();
+			char coluna = str.charAt(0);
+			int linha = Integer.parseInt(str.substring(1));
+			return new PosicaoDoXadrez(coluna, linha);
+		}
+		catch (RuntimeException e) {
+			throw new InputMismatchException("Erro na instanciação de PosicaoDoXadrez. Valores válidos são de a1 até h8.");
+		}
+	}
 
 	// Função para imprimir um tabuleiro de xadrez
 	public static void imprimirTabuleiro(PecaDeXadrez[][] pecas) {

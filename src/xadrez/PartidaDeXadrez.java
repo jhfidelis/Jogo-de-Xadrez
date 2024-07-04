@@ -1,5 +1,7 @@
 package xadrez;
 
+import jogoDeTabuleiro.Peca;
+import jogoDeTabuleiro.Posicao;
 import jogoDeTabuleiro.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
@@ -30,6 +32,30 @@ public class PartidaDeXadrez {
 			}
 		}
 		return mat;
+	}
+
+	// Método para realizar a captura de uma peça
+	public PecaDeXadrez executarMovimento(PosicaoDoXadrez posicaoOrigem, PosicaoDoXadrez posicaoDestino) {
+		Posicao origem = posicaoOrigem.converterParaPosicao();
+		Posicao destino = posicaoDestino.converterParaPosicao();
+		validarPosicaoOrigem(origem);
+		Peca pecaCapturada = realizarMovimento(origem, destino);
+		return (PecaDeXadrez) pecaCapturada;
+	}
+
+	// Método para realizar o movimento de uma peça
+	private Peca realizarMovimento(Posicao origem, Posicao destino) {
+		Peca p = tabuleiro.removerPeca(origem);
+		Peca pecaCapturada = tabuleiro.removerPeca(destino);
+		tabuleiro.inserirPeca(p, destino);
+		return pecaCapturada;
+	}
+
+	// Método para validar uma posição de origem
+	private void validarPosicaoOrigem(Posicao posicao) {
+		if (!tabuleiro.checarPosicao(posicao)) {
+			throw new XadrezException("Não existe uma peça na posição de origem");
+		}
 	}
 
 	// Método para inserir uma peça em um lugar determinado
