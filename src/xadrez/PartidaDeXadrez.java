@@ -54,7 +54,10 @@ public class PartidaDeXadrez {
 	// Método para validar uma posição de origem
 	private void validarPosicaoOrigem(Posicao posicao) {
 		if (!tabuleiro.checarPosicao(posicao)) {
-			throw new XadrezException("Não existe uma peça na posição de origem");
+			throw new XadrezException("Nao existe uma peca na posicao de origem");
+		}
+		if (!tabuleiro.retornarPeca(posicao).checarQualquerMovPossivel()) {
+			throw new XadrezException("Nao existe mocimentos possiveis para essa peca");
 		}
 	}
 

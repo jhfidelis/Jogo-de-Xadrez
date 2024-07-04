@@ -8,7 +8,7 @@ import jogoDeTabuleiro.Tabuleiro;
  * @author Henrique Fidelis
  * @since Classe criada em 28/06/2024
  */
-public class PecaDeXadrez extends Peca {
+public abstract class PecaDeXadrez extends Peca {
 
 	// Atributo da clase PecaDeXadrez
 	private Cor cor;

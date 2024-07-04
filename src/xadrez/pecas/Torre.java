@@ -23,4 +23,11 @@ public class Torre extends PecaDeXadrez {
 		return "T";
 	}
 
+	// Método sobrescrito para definir os movimentos do Rei
+	@Override
+	public boolean[][] definirMoventosPossiveis() {
+		boolean[][] mat = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()];
+		return mat;
+	}
+
 }// fim da classe
