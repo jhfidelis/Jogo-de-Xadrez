@@ -9,6 +9,7 @@ import xadrez.PosicaoDoXadrez;
 
 /**
  * Classe criada para definir a interface do jogo de zadrez
+ * 
  * @author Henrique Fidelis
  * @since Classe criada em 28/06/2024
  */
@@ -36,6 +37,13 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+	// Método para limpar a tela e imprimir o tabuleiro novamente
+	// https://stackoverflow.com/questions/2979383/java-clear-the-console
+	public static void limparTela() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
+
 	// Método para ler uma posição do usuário
 	public static PosicaoDoXadrez lerPosicaoDoXadrez(Scanner sc) {
 		try {
@@ -43,9 +51,9 @@ public class UI {
 			char coluna = str.charAt(0);
 			int linha = Integer.parseInt(str.substring(1));
 			return new PosicaoDoXadrez(coluna, linha);
-		}
-		catch (RuntimeException e) {
-			throw new InputMismatchException("Erro na instanciação de PosicaoDoXadrez. Valores válidos são de a1 até h8.");
+		} catch (RuntimeException e) {
+			throw new InputMismatchException(
+					"Erro na instanciação de PosicaoDoXadrez. Valores válidos são de a1 até h8.");
 		}
 	}
 
