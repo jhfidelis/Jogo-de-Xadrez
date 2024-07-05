@@ -34,6 +34,12 @@ public class PartidaDeXadrez {
 		return mat;
 	}
 
+	public boolean[][] definirMovimentosPossiveis(PosicaoDoXadrez posicaoDeOrigem) {
+		Posicao posicao = posicaoDeOrigem.converterParaPosicao();
+		validarPosicaoOrigem(posicao);
+		return tabuleiro.retornarPeca(posicao).definirMovimentosPossiveis();
+	}
+
 	// Método para realizar a captura de uma peça
 	public PecaDeXadrez executarMovimento(PosicaoDoXadrez posicaoOrigem, PosicaoDoXadrez posicaoDestino) {
 		Posicao origem = posicaoOrigem.converterParaPosicao();
