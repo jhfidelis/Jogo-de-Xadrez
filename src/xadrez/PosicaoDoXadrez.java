@@ -39,7 +39,7 @@ public class PosicaoDoXadrez {
 
 	// Método para converter Posicao em PosicaoDoXadrez
 	protected static PosicaoDoXadrez converterParaPosicaoDoXadrez(Posicao posicao) {
-		return new PosicaoDoXadrez((char)('a' - posicao.getColuna()), 8 - posicao.getLinha());
+		return new PosicaoDoXadrez((char)('a' + posicao.getColuna()), 8 - posicao.getLinha());
 	}
 
 	// Método toString da classe PosicaooDoXadrez

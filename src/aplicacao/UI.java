@@ -67,6 +67,9 @@ public class UI {
 		imprimirPecasCapturadas(captura);
 		System.out.println("\nTurno: " + partida.getTurno());
 		System.out.println("Vez do jogador: " + partida.getJogadorAtual());
+		if (partida.getXeque()) {
+			System.out.println("XEQUE!");
+		}
 	}
 
 	// Função para imprimir um tabuleiro de xadrez

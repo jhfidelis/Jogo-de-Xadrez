@@ -25,6 +25,11 @@ public abstract class PecaDeXadrez extends Peca {
 		return cor;
 	}
 
+	// Método get para retornar uma posição do xadrez
+	public PosicaoDoXadrez getPoisicaoDoXadrez() {
+		return PosicaoDoXadrez.converterParaPosicaoDoXadrez(posicao);
+	}
+
 	// Método para checar se há uma peça oponente como opção para a peça selecionada
 	protected boolean checarPecaOponente (Posicao posicao) {
 		PecaDeXadrez p = (PecaDeXadrez)getTabuleiro().retornarPeca(posicao);

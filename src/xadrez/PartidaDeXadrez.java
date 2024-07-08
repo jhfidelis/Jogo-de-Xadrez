@@ -2,6 +2,7 @@ package xadrez;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jogoDeTabuleiro.Peca;
 import jogoDeTabuleiro.Posicao;
@@ -21,6 +22,7 @@ public class PartidaDeXadrez {
 	private int turno;
 	private Cor jogadorAtual;
 	private Tabuleiro tabuleiro;
+	private boolean xeque;
 	
 	private List<Peca> pecasNoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -40,6 +42,10 @@ public class PartidaDeXadrez {
 
 	public Cor getJogadorAtual() {
 		return jogadorAtual;
+	}
+
+	public boolean getXeque() {
+		return xeque;
 	}
 
 	// Método para retornar uma matriz de peças de xadrez correspondentes a partida
@@ -67,8 +73,16 @@ public class PartidaDeXadrez {
 		validarPosicaoOrigem(origem);
 		validarPosicaoDestino(origem, destino);
 		Peca pecaCapturada = realizarMovimento(origem, destino);
+		
+		if (testarXeque(jogadorAtual)) {
+			desfazerMovimento(origem, destino, pecaCapturada);
+			throw new XadrezException("Voce nao pode se colocar em xeque");
+		}
+		
+		xeque = (testarXeque(checarOponente(jogadorAtual))) ? true : false;
+		
 		trocarTurno();
-		return (PecaDeXadrez) pecaCapturada;
+		return (PecaDeXadrez)pecaCapturada;
 	}
 
 	// Método para realizar o movimento de uma peça
@@ -83,6 +97,18 @@ public class PartidaDeXadrez {
 		}
 		
 		return pecaCapturada;
+	}
+
+	// Método para desfazer um movimento realizado
+	private void desfazerMovimento(Posicao origem, Posicao destino, Peca pecaCapturada) {
+		Peca p = tabuleiro.removerPeca(destino);
+		tabuleiro.inserirPeca(p, origem);
+		
+		if (pecaCapturada != null) {
+			tabuleiro.inserirPeca(pecaCapturada, destino);
+			pecasCapturadas.remove(pecaCapturada);
+			pecasNoTabuleiro.add(pecaCapturada);
+		}
 	}
 
 	// Método para validar uma posição de origem
@@ -109,6 +135,35 @@ public class PartidaDeXadrez {
 	private void trocarTurno() {
 		turno++;
 		jogadorAtual = (jogadorAtual == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
+	}
+
+	// Método para checar cor de uma peça adversária
+	private Cor checarOponente(Cor cor) {
+		return (cor == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
+	}
+
+	// Método para localizar o rei no tabuleiro
+	private PecaDeXadrez localizarRei(Cor cor) {
+		List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaDeXadrez)x).getCor() == cor).collect(Collectors.toList());
+		for (Peca p : lista) {
+			if (p instanceof Rei) {
+				return (PecaDeXadrez) p;
+			}
+		}
+		throw new IllegalStateException("Nao existe REI " + cor + " no tabuleiro");
+	}
+
+	// Método para verificar se o rei está em xeque
+	private boolean testarXeque(Cor cor) {
+		Posicao posicaoDoRei = localizarRei(cor).getPoisicaoDoXadrez().converterParaPosicao();
+		List<Peca> pecasOponentes = pecasNoTabuleiro.stream().filter(x -> ((PecaDeXadrez)x).getCor() == checarOponente(cor)).collect(Collectors.toList());
+		for (Peca p : pecasOponentes) {
+			boolean[][] mat = p.definirMovimentosPossiveis();
+			if (mat[posicaoDoRei.getLinha()][posicaoDoRei.getColuna()]) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Método para inserir uma peça em um lugar determinado
