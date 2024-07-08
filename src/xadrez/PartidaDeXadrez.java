@@ -1,5 +1,8 @@
 package xadrez;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jogoDeTabuleiro.Peca;
 import jogoDeTabuleiro.Posicao;
 import jogoDeTabuleiro.Tabuleiro;
@@ -18,6 +21,9 @@ public class PartidaDeXadrez {
 	private int turno;
 	private Cor jogadorAtual;
 	private Tabuleiro tabuleiro;
+	
+	private List<Peca> pecasNoTabuleiro = new ArrayList<>();
+	private List<Peca> pecasCapturadas = new ArrayList<>();
 
 	// Método construtor da classe
 	public PartidaDeXadrez() {
@@ -70,6 +76,12 @@ public class PartidaDeXadrez {
 		Peca p = tabuleiro.removerPeca(origem);
 		Peca pecaCapturada = tabuleiro.removerPeca(destino);
 		tabuleiro.inserirPeca(p, destino);
+		
+		if (pecaCapturada != null) {
+			pecasNoTabuleiro.remove(pecaCapturada);
+			pecasCapturadas.add(pecaCapturada);
+		}
+		
 		return pecaCapturada;
 	}
 
@@ -93,15 +105,16 @@ public class PartidaDeXadrez {
 		}
 	}
 
-	// Método para inserir uma peça em um lugar determinado
-	private void inserirNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
-		tabuleiro.inserirPeca(peca, new PosicaoDoXadrez(coluna, linha).converterParaPosicao());
-	}
-
 	// Método para trocar o turno do jogador
 	private void trocarTurno() {
 		turno++;
 		jogadorAtual = (jogadorAtual == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
+	}
+
+	// Método para inserir uma peça em um lugar determinado
+	private void inserirNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
+		tabuleiro.inserirPeca(peca, new PosicaoDoXadrez(coluna, linha).converterParaPosicao());
+		pecasNoTabuleiro.add(peca);
 	}
 
 	// Método para iniciar a partida de xadrez
