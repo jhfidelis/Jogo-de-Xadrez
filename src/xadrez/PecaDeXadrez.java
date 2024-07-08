@@ -13,6 +13,7 @@ public abstract class PecaDeXadrez extends Peca {
 
 	// Atributo da clase PecaDeXadrez
 	private Cor cor;
+	private int contagemDeMovimentos;
 
 	// Método construtor da classe
 	public PecaDeXadrez(Tabuleiro tabuleiro, Cor cor) {
@@ -20,9 +21,23 @@ public abstract class PecaDeXadrez extends Peca {
 		this.cor = cor;
 	}
 
-	// Método get da classe
+	// Métodos get da classe
 	public Cor getCor() {
 		return cor;
+	}
+
+	public int getContagemDeMovimento() {
+		return contagemDeMovimentos;
+	}
+
+	// Método para incrementar a quantidade de movimentos da partida
+	public void incrementarMovimento() {
+		contagemDeMovimentos++;
+	}
+
+	// Método para decrementar a quantidade de movimentos da partida
+	public void decrementarMovimento() {
+		contagemDeMovimentos--;
 	}
 
 	// Método get para retornar uma posição do xadrez
