@@ -23,6 +23,7 @@ public class PartidaDeXadrez {
 	private Cor jogadorAtual;
 	private Tabuleiro tabuleiro;
 	private boolean xeque;
+	private boolean xequeMate;
 	
 	private List<Peca> pecasNoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -46,6 +47,10 @@ public class PartidaDeXadrez {
 
 	public boolean getXeque() {
 		return xeque;
+	}
+
+	public boolean getXequeMate() {
+		return xequeMate;
 	}
 
 	// Método para retornar uma matriz de peças de xadrez correspondentes a partida
@@ -81,7 +86,13 @@ public class PartidaDeXadrez {
 		
 		xeque = (testarXeque(checarOponente(jogadorAtual))) ? true : false;
 		
-		trocarTurno();
+		if (testarXequeMate(checarOponente(jogadorAtual))) {
+			xequeMate = true;
+		}
+		else {
+			trocarTurno();			
+		}
+		
 		return (PecaDeXadrez)pecaCapturada;
 	}
 
@@ -166,6 +177,32 @@ public class PartidaDeXadrez {
 		return false;
 	}
 
+	// Método para verificar se o rei está em xeque-mate
+	private boolean testarXequeMate(Cor cor) {
+		if (!testarXeque(cor)) {
+			return false;
+		}
+		List<Peca> lista = pecasNoTabuleiro.stream().filter(x -> ((PecaDeXadrez)x).getCor() == cor).collect(Collectors.toList());
+		for (Peca p : lista) {
+			boolean[][] mat = p.definirMovimentosPossiveis();
+			for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+				for (int j = 0; j < tabuleiro.getColunas(); j++) {
+					if (mat[i][j]) {
+						Posicao origem = ((PecaDeXadrez)p).getPoisicaoDoXadrez().converterParaPosicao();
+						Posicao destino = new Posicao(i, j);
+						Peca pecaCapturada = realizarMovimento(origem, destino);
+						boolean testarXeque = testarXeque(cor);
+						desfazerMovimento(origem, destino, pecaCapturada);
+						if (!testarXeque) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	// Método para inserir uma peça em um lugar determinado
 	private void inserirNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
 		tabuleiro.inserirPeca(peca, new PosicaoDoXadrez(coluna, linha).converterParaPosicao());
@@ -174,19 +211,12 @@ public class PartidaDeXadrez {
 
 	// Método para iniciar a partida de xadrez
 	public void iniciarPartida() {
-		inserirNovaPeca('c', 1, new Torre(tabuleiro, Cor.BRANCO));
-		inserirNovaPeca('c', 2, new Torre(tabuleiro, Cor.BRANCO));
-		inserirNovaPeca('d', 2, new Torre(tabuleiro, Cor.BRANCO));
-		inserirNovaPeca('e', 2, new Torre(tabuleiro, Cor.BRANCO));
-		inserirNovaPeca('e', 1, new Torre(tabuleiro, Cor.BRANCO));
-		inserirNovaPeca('d', 1, new Rei(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('h', 7, new Torre(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('d', 1, new Torre(tabuleiro, Cor.BRANCO));
+		inserirNovaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
 
-		inserirNovaPeca('c', 7, new Torre(tabuleiro, Cor.PRETO));
-		inserirNovaPeca('c', 8, new Torre(tabuleiro, Cor.PRETO));
-		inserirNovaPeca('d', 7, new Torre(tabuleiro, Cor.PRETO));
-		inserirNovaPeca('e', 7, new Torre(tabuleiro, Cor.PRETO));
-		inserirNovaPeca('e', 8, new Torre(tabuleiro, Cor.PRETO));
-		inserirNovaPeca('d', 8, new Rei(tabuleiro, Cor.PRETO));
+		inserirNovaPeca('b', 8, new Torre(tabuleiro, Cor.PRETO));
+		inserirNovaPeca('a', 8, new Rei(tabuleiro, Cor.PRETO));
 	}
 
 }// fim da classe
