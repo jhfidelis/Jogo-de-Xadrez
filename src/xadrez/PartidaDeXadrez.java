@@ -15,12 +15,25 @@ import xadrez.pecas.Torre;
 public class PartidaDeXadrez {
 
 	// Declaração de atributos da classe PartidaDeXadrez
+	private int turno;
+	private Cor jogadorAtual;
 	private Tabuleiro tabuleiro;
 
 	// Método construtor da classe
 	public PartidaDeXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);
+		turno = 1;
+		jogadorAtual = Cor.BRANCO;
 		iniciarPartida();
+	}
+
+	// Métodos getters de turno e jogadorAtual
+	public int getTurno() {
+		return turno;
+	}
+
+	public Cor getJogadorAtual() {
+		return jogadorAtual;
 	}
 
 	// Método para retornar uma matriz de peças de xadrez correspondentes a partida
@@ -34,6 +47,7 @@ public class PartidaDeXadrez {
 		return mat;
 	}
 
+	// Método para definir os possíveis movimentos de uma peça
 	public boolean[][] definirMovimentosPossiveis(PosicaoDoXadrez posicaoDeOrigem) {
 		Posicao posicao = posicaoDeOrigem.converterParaPosicao();
 		validarPosicaoOrigem(posicao);
@@ -47,6 +61,7 @@ public class PartidaDeXadrez {
 		validarPosicaoOrigem(origem);
 		validarPosicaoDestino(origem, destino);
 		Peca pecaCapturada = realizarMovimento(origem, destino);
+		trocarTurno();
 		return (PecaDeXadrez) pecaCapturada;
 	}
 
@@ -60,8 +75,11 @@ public class PartidaDeXadrez {
 
 	// Método para validar uma posição de origem
 	private void validarPosicaoOrigem(Posicao posicao) {
-		if (!tabuleiro.checarPosicao(posicao)) {
+		if (!tabuleiro.checarPeca(posicao)) {
 			throw new XadrezException("Nao existe uma peca na posicao de origem");
+		}
+		if (jogadorAtual != ((PecaDeXadrez)tabuleiro.retornarPeca(posicao)).getCor()) {
+			throw new XadrezException("A peca escolhida nao e sua");
 		}
 		if (!tabuleiro.retornarPeca(posicao).checarQualquerMovPossivel()) {
 			throw new XadrezException("Nao existe mocimentos possiveis para essa peca");
@@ -78,6 +96,12 @@ public class PartidaDeXadrez {
 	// Método para inserir uma peça em um lugar determinado
 	private void inserirNovaPeca(char coluna, int linha, PecaDeXadrez peca) {
 		tabuleiro.inserirPeca(peca, new PosicaoDoXadrez(coluna, linha).converterParaPosicao());
+	}
+
+	// Método para trocar o turno do jogador
+	private void trocarTurno() {
+		turno++;
+		jogadorAtual = (jogadorAtual == Cor.BRANCO) ? Cor.PRETO : Cor.BRANCO;
 	}
 
 	// Método para iniciar a partida de xadrez

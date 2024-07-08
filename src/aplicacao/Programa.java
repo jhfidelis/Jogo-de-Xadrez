@@ -22,29 +22,30 @@ public class Programa {
 		Scanner sc = new Scanner(System.in);
 		PartidaDeXadrez partida = new PartidaDeXadrez();
 
-		try {
-			while (true) {
+		while (true) {
+			try {
 				UI.limparTela();
-				UI.imprimirTabuleiro(partida.getPecas());
+				UI.imprimirPartida(partida);
 				System.out.print("\nOrigem: ");
 				PosicaoDoXadrez origem = UI.lerPosicaoDoXadrez(sc);
-				
+
 				boolean[][] movimentosPossiveis = partida.definirMovimentosPossiveis(origem);
 				UI.limparTela();
 				UI.imprimirTabuleiro(partida.getPecas(), movimentosPossiveis);
-				
+
 				System.out.print("\nDestino: ");
 				PosicaoDoXadrez destino = UI.lerPosicaoDoXadrez(sc);
 
 				PecaDeXadrez pecaCapturada = partida.executarMovimento(origem, destino);
+			} 
+			catch (XadrezException e) {
+				System.out.println(e.getMessage());
+				sc.nextLine();
+			} 
+			catch (InputMismatchException e) {
+				System.out.println(e.getMessage());
+				sc.nextLine();
 			}
-		} catch (XadrezException e) {
-			System.out.println(e.getMessage());
-			sc.nextLine();
-		}
-		catch (InputMismatchException e) {
-			System.out.println(e.getMessage());
-			sc.nextLine();
 		}
 
 	}// fim do main
