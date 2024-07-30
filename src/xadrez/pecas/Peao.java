@@ -5,12 +5,20 @@ import jogoDeTabuleiro.Tabuleiro;
 import xadrez.Cor;
 import xadrez.PecaDeXadrez;
 
+/**
+ * Classe criada para representar a peça Peao
+ * @author Henrique Fidelis
+ * @since Classe criada em 29/07/2024
+ */
+
 public class Peao extends PecaDeXadrez {
 
+	// Método construtor da classe Peao
 	public Peao(Tabuleiro tabuleiro, Cor cor) {
 		super(tabuleiro, cor);
 	}
 
+	// Método sobrescrito para definir os movimentos do Peao
 	@Override
 	public boolean[][] definirMovimentosPossiveis() {
 		boolean[][] mat = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()];
@@ -63,7 +71,8 @@ public class Peao extends PecaDeXadrez {
 		}
 		return mat;
 	}
-	
+
+	// Método toString da classe
 	@Override
 	public String toString() {
 		return "P";
