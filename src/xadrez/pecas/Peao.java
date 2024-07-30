@@ -78,4 +78,4 @@ public class Peao extends PecaDeXadrez {
 		return "P";
 	}
 
-}
+}// fim da classe

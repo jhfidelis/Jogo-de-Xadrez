@@ -13,7 +13,7 @@ import xadrez.PecaDeXadrez;
 
 public class Bispo extends PecaDeXadrez {
 
-	// Método construtor da classe Torre
+	// Método construtor da classe Bispo
 	public Bispo(Tabuleiro tabuleiro, Cor cor) {
 		super(tabuleiro, cor);
 	}
@@ -24,7 +24,7 @@ public class Bispo extends PecaDeXadrez {
 		return "B";
 	}
 
-	// Método sobrescrito para definir os movimentos do Rei
+	// Método sobrescrito para definir os movimentos do Bispo
 	@Override
 	public boolean[][] definirMovimentosPossiveis() {
 		boolean[][] mat = new boolean[getTabuleiro().getLinhas()][getTabuleiro().getColunas()];
