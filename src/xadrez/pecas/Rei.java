@@ -3,6 +3,7 @@ package xadrez.pecas;
 import jogoDeTabuleiro.Posicao;
 import jogoDeTabuleiro.Tabuleiro;
 import xadrez.Cor;
+import xadrez.PartidaDeXadrez;
 import xadrez.PecaDeXadrez;
 
 /**
@@ -12,10 +13,13 @@ import xadrez.PecaDeXadrez;
  */
 
 public class Rei extends PecaDeXadrez{
+	
+	private PartidaDeXadrez partidaXadrez;
 
 	// Método construtor da classe Rei
-	public Rei(Tabuleiro tabuleiro, Cor cor) {
+	public Rei(Tabuleiro tabuleiro, Cor cor, PartidaDeXadrez partidaXadrez) {
 		super(tabuleiro, cor);
+		this.partidaXadrez = partidaXadrez;
 	}
 
 	// Método toString da classe
@@ -28,6 +32,12 @@ public class Rei extends PecaDeXadrez{
 	private boolean checarMovimentoPossivel(Posicao posicao) {
 		PecaDeXadrez p = (PecaDeXadrez) getTabuleiro().retornarPeca(posicao);
 		return p == null || p.getCor() != getCor();
+	}
+
+	// Método para testar a condição de Roque
+	private boolean testarTorreParaRoque(Posicao posicao) {
+		PecaDeXadrez p = (PecaDeXadrez)getTabuleiro().retornarPeca(posicao);
+		return p != null && p instanceof Torre && p.getCor() == getCor() && p.getContagemDeMovimento() == 0;
 	}
 
 	// Método sobrescrito para definir os movimentos do Rei
@@ -83,6 +93,30 @@ public class Rei extends PecaDeXadrez{
 		aux.inserirValores(posicao.getLinha() + 1, posicao.getColuna() + 1);
 		if (getTabuleiro().checarPosicao(aux) && checarMovimentoPossivel(aux)) {
 			mat[aux.getLinha()][aux.getColuna()] = true;
+		}
+		
+		// #MovimentoEspecial - Roque
+		if (getContagemDeMovimento() == 0 && !partidaXadrez.getXeque()) {
+			// #MovimentoEspecial - Roque pequeno
+			Posicao posT1 = new Posicao(posicao.getLinha(), posicao.getColuna() + 3);
+			if (testarTorreParaRoque(posT1)) {
+				Posicao p1 = new Posicao(posicao.getLinha(), posicao.getColuna() + 1);
+				Posicao p2 = new Posicao(posicao.getLinha(), posicao.getColuna() + 2);
+				if (getTabuleiro().retornarPeca(p1) == null && getTabuleiro().retornarPeca(p2) == null) {
+					mat[posicao.getLinha()][posicao.getColuna() + 2] = true;
+				}
+			}
+			
+			// #MovimentoEspecial - Roque grande
+			Posicao posT2 = new Posicao(posicao.getLinha(), posicao.getColuna() - 4);
+			if (testarTorreParaRoque(posT2)) {
+				Posicao p1 = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);
+				Posicao p2 = new Posicao(posicao.getLinha(), posicao.getColuna() - 2);
+				Posicao p3 = new Posicao(posicao.getLinha(), posicao.getColuna() - 3);
+				if (getTabuleiro().retornarPeca(p1) == null && getTabuleiro().retornarPeca(p2) == null && getTabuleiro().retornarPeca(p3) == null) {
+					mat[posicao.getLinha()][posicao.getColuna() - 2] = true;
+				}
+			}
 		}
 
 		return mat;
