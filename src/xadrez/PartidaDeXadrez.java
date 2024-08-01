@@ -1,5 +1,6 @@
 package xadrez;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ public class PartidaDeXadrez {
 	private boolean xeque;
 	private boolean xequeMate;
 	private PecaDeXadrez vulnerabilidadeEnPassant;
+	private PecaDeXadrez promocao;
 	
 	private List<Peca> pecasNoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -60,6 +62,10 @@ public class PartidaDeXadrez {
 	
 	public PecaDeXadrez getVulnerabilidadeEnPassant() {
 		return vulnerabilidadeEnPassant;
+	}
+	
+	public PecaDeXadrez getPromocao() {
+		return promocao;
 	}
 
 	// Método para retornar uma matriz de peças de xadrez correspondentes a partida
@@ -94,6 +100,15 @@ public class PartidaDeXadrez {
 		}
 		
 		PecaDeXadrez pecaMovida = (PecaDeXadrez) tabuleiro.retornarPeca(destino);
+
+		// #MovimentoEspecial promocao
+		promocao = null;
+		if (pecaMovida instanceof Peao) {
+			if ((pecaMovida.getCor() == Cor.BRANCO && destino.getLinha() == 0) || (pecaMovida.getCor() == Cor.PRETO && destino.getLinha() == 7)) {
+				promocao = (PecaDeXadrez)tabuleiro.retornarPeca(destino);
+				promocao = substituirPecaPromovida("D");
+			}
+		}
 		
 		xeque = (testarXeque(checarOponente(jogadorAtual))) ? true : false;
 		
@@ -113,6 +128,34 @@ public class PartidaDeXadrez {
 		}
 		
 		return (PecaDeXadrez)pecaCapturada;
+	}
+
+	// Método para realizar a promoção de um peão
+	public PecaDeXadrez substituirPecaPromovida(String tipo) {
+		if (promocao == null) {
+			throw new IllegalStateException("Nao ha pecas para ser promovida");
+		}
+		if (!tipo.equals("B") && !tipo.equals("C") && !tipo.equals("D") && !tipo.equals("T")) {
+			throw new InvalidParameterException("Tipo invalido para promocao");
+		}
+		
+		Posicao pos = promocao.getPoisicaoDoXadrez().converterParaPosicao();
+		Peca p = tabuleiro.removerPeca(pos);
+		pecasNoTabuleiro.remove(p);
+		
+		PecaDeXadrez novaPeca = criarNovaPeca(tipo, promocao.getCor());
+		tabuleiro.inserirPeca(novaPeca, pos);
+		pecasNoTabuleiro.add(novaPeca);
+		
+		return novaPeca;
+	}
+
+	// Método para instanciar uma peça promovida
+	private PecaDeXadrez criarNovaPeca(String tipo, Cor cor) {
+		if (tipo.equals("B")) return new Bispo(tabuleiro, cor);
+		if (tipo.equals("C")) return new Cavalo(tabuleiro, cor);
+		if (tipo.equals("D")) return new Dama(tabuleiro, cor);
+		return new Torre(tabuleiro, cor);
 	}
 
 	// Método para realizar o movimento de uma peça
